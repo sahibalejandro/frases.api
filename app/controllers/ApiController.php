@@ -47,6 +47,7 @@ abstract class ApiController extends \BaseController {
 
 	/**
 	 * Store a newly created resource in storage.
+     * If $id is present the the resource will be updated.
 	 *
 	 * @return Response
 	 */
