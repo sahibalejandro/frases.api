@@ -118,7 +118,7 @@ abstract class ApiController extends \BaseController {
         $model = $this->model;
 
         return $model::query()
-            ->limit($this->limit)
+            //->limit($this->limit)
             ->get();
     }
 }
