@@ -24,4 +24,9 @@ Route::group(['prefix' => 'v1'], function () use ($methods)
      * Sentences resource
      */
     Route::resource('sentences', 'SentencesApiController', ['only' => $methods]);
+
+    /**
+     * Sentence votes update
+     */
+    Route::match(['PUT', 'PATCH'], 'sentences/{id}/vote', 'SentencesApiController@vote');
 });

@@ -31,6 +31,11 @@ abstract class ApiController extends \BaseController {
     public function __construct(InputValidator $validator)
     {
         $this->validator = $validator;
+
+        // Add basic auth filters
+        $filterOptions = ['on' => ['post', 'put', 'patch', 'delete']];
+        $this->beforeFilter('auth.basic.once', $filterOptions);
+        $this->beforeFilter('auth.basic.status', $filterOptions);
     }
 
     /**
@@ -49,6 +54,7 @@ abstract class ApiController extends \BaseController {
 	 * Store a newly created resource in storage.
      * If $id is present the the resource will be updated.
 	 *
+     * @param  int  $id
 	 * @return Response
 	 */
 	public function store($id = null)
@@ -118,7 +124,7 @@ abstract class ApiController extends \BaseController {
         $model = $this->model;
 
         return $model::query()
-            //->limit($this->limit)
+            ->limit(Input::get('limit', $this->limit))
             ->get();
     }
 }

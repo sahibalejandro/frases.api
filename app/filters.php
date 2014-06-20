@@ -54,6 +54,22 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+/**
+ * HTTP Basic Authentication without setting a user identifier cookie in the session
+ */
+Route::filter('auth.basic.once', function (){
+    return Auth::onceBasic('username');
+});
+
+/**
+ * Check authorized user status, and block access if it's not active.
+ */
+Route::filter('auth.basic.status', function (){
+    if (Auth::user()->status != 'A') {
+        return Response::apiUserAccountBlocked();
+    }
+});
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter

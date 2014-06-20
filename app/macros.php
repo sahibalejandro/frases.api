@@ -35,3 +35,11 @@ Response::macro('apiNotFound', function ()
 {
     return Response::api(null, 'Not Found', false, HttpResponse::HTTP_NOT_FOUND);
 });
+
+/**
+ * Invalid user response
+ */
+Response::macro('apiUserAccountBlocked', function ()
+{
+    return Response::api(null, 'User account blocked', false, HttpResponse::HTTP_FORBIDDEN);
+});
