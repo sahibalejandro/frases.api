@@ -38,11 +38,11 @@ class Sentence extends ApiModel {
         }
 
         return [
-            'id'             => (int) $this->id,
-            'author_id'      => (int) $this->author_id,
+            'id'             => (int)$this->id,
+            'author_id'      => (int)$this->author_id,
             'content'        => $this->content,
-            'positive_votes' => $this->positive_votes,
-            'negative_votes' => $this->negative_votes,
+            'positive_votes' => (int)$this->positive_votes,
+            'negative_votes' => (int)$this->negative_votes,
             'tags'           => $tags,
         ];
     }
