@@ -128,8 +128,8 @@ class SentencesApiController extends \ApiController {
 
         // Return the new votes count
         return Response::api([
-            'positive_votes' => $sentence->positive_votes,
-            'negative_votes' => $sentence->negative_votes,
+            'positive_votes' => (int)$sentence->positive_votes,
+            'negative_votes' => (int)$sentence->negative_votes,
         ], 'Votes updated');
     }
 } 
