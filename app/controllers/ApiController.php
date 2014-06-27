@@ -121,9 +121,11 @@ abstract class ApiController extends \BaseController {
      */
     protected function getResources()
     {
-        $model = $this->model;
+        $model   = $this->model;
+        $sinceId = Input::get('since', 0);
 
         return $model::query()
+            ->where('id', '>=', $sinceId)
             ->limit(Input::get('limit', $this->limit))
             ->get();
     }
