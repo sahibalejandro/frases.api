@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Zero\Validators\SentenceValidator;
 
 /**
@@ -131,5 +132,34 @@ class SentencesApiController extends \ApiController {
             'positive_votes' => (int)$sentence->positive_votes,
             'negative_votes' => (int)$sentence->negative_votes,
         ], 'Votes updated');
+    }
+
+    /**
+     * Return a random sentence.
+     *
+     * @return mixed
+     */
+    public function random()
+    {
+        // Istead of use ORDER BY RAND(), we make an optimized random selection
+        // using only de ID of the sentence based on the total rows in the table.
+        $sentence     = null;
+        $attempts     = 0;
+        $max_attempts = 5;
+        $count        = Sentence::count();
+
+        // Try to get a random sentence few times.
+        while($sentence === null && $attempts < $max_attempts) {
+            $attempts++;
+            $id = rand(1, $count);
+            $sentence = Sentence::find($id);
+        }
+
+        if (!$sentence) {
+            // Just select the first one
+            $sentence = Sentence::firstOrFail();
+        }
+
+        return Response::api($sentence->transform());
     }
 } 

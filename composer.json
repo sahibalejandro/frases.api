@@ -26,6 +26,7 @@
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",
+            "php artisan ide-helper:generate",
 			"php artisan optimize"
 		],
 		"post-create-project-cmd": [
@@ -37,6 +38,7 @@
 	},
 	"minimum-stability": "stable",
     "require-dev": {
-        "fzaninotto/Faker": "1.4"
+        "fzaninotto/Faker": "1.4",
+		"barryvdh/laravel-ide-helper": "1.10.*"
     }
 }

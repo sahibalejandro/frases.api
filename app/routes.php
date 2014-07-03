@@ -23,6 +23,7 @@ Route::group(['prefix' => 'v1'], function () use ($methods)
     /**
      * Sentences resource
      */
+    Route::get('sentences/random', 'SentencesApiController@random');
     Route::resource('sentences', 'SentencesApiController', ['only' => $methods]);
 
     /**
