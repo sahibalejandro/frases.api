@@ -124,9 +124,24 @@ abstract class ApiController extends \BaseController {
         $model   = $this->model;
         $sinceId = Input::get('since', 0);
 
-        return $model::query()
-            ->where('id', '>=', $sinceId)
+        $query = $model::query();
+
+        $this->configureQuery($query);
+
+        return $query->where('id', '>=', $sinceId)
             ->limit(Input::get('limit', $this->limit))
             ->get();
+    }
+
+
+    /**
+     * Configure the query used on getResources() method, this method should
+     * be overriden.
+     *
+     * @param $query
+     */
+    protected function configureQuery($query)
+    {
+        // ... configure query ...
     }
 }

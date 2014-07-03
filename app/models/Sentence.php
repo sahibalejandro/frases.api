@@ -24,26 +24,28 @@ class Sentence extends ApiModel {
         return $this->belongsToMany('Tag');
     }
 
+    public function author()
+    {
+        return $this->belongsTo('Author');
+    }
+
     /**
      * @return array
      */
     public function transform()
     {
-        // Get related tags and transform them.
-        $tags = $this->tags;
-        if (!$tags) {
-            $tags = [];
-        } else {
-            $tags = Transform::collection($tags);
-        }
-
-        return [
+        $transform = [
             'id'             => (int)$this->id,
             'author_id'      => (int)$this->author_id,
             'content'        => $this->content,
             'positive_votes' => (int)$this->positive_votes,
             'negative_votes' => (int)$this->negative_votes,
-            'tags'           => $tags,
+
+            // To optimize this use eager loading.
+            'tags'           => Transform::collection($this->tags),
+            'author'         => $this->author->transform(),
         ];
+
+        return $transform;
     }
 } 

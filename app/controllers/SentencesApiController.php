@@ -22,6 +22,10 @@ class SentencesApiController extends \ApiController {
     public function __construct(SentenceValidator $validator)
     {
         parent::__construct($validator);
+
+        DB::listen(function ($sql){
+            Log::debug($sql);
+        });
     }
 
     /**
@@ -152,7 +156,7 @@ class SentencesApiController extends \ApiController {
         while($sentence === null && $attempts < $max_attempts) {
             $attempts++;
             $id = rand(1, $count);
-            $sentence = Sentence::find($id);
+            $sentence = Sentence::with('author', 'tags')->whereId($id)->first();
         }
 
         if (!$sentence) {
@@ -161,5 +165,21 @@ class SentencesApiController extends \ApiController {
         }
 
         return Response::api($sentence->transform());
+    }
+
+    public function show($id)
+    {
+        $resource = Sentence::with('author', 'tags')->whereId($id)->firstOrFail();
+        return Response::api($resource->transform());
+    }
+
+    /**
+     * Implement eager loading to the main resources query.
+     *
+     * @param $query
+     */
+    protected function configureQuery($query)
+    {
+        $query->with('author', 'tags');
     }
 } 
