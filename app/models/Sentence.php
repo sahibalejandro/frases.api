@@ -36,7 +36,6 @@ class Sentence extends ApiModel {
     {
         $transform = [
             'id'             => (int)$this->id,
-            'author_id'      => (int)$this->author_id,
             'content'        => $this->content,
             'positive_votes' => (int)$this->positive_votes,
             'negative_votes' => (int)$this->negative_votes,
