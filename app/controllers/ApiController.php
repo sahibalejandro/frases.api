@@ -28,7 +28,7 @@ abstract class ApiController extends \BaseController {
     /**
      * @param InputValidator $validator
      */
-    public function __construct(InputValidator $validator)
+    public function __construct(InputValidator $validator = null)
     {
         $this->validator = $validator;
 
@@ -43,7 +43,7 @@ abstract class ApiController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($parent_id = null)
 	{
 		$resources = $this->getResources();
         return Response::api(Transform::collection($resources));
@@ -119,7 +119,7 @@ abstract class ApiController extends \BaseController {
      *
      * @return mixed
      */
-    protected function getResources()
+    protected function getResources($parent_id = null)
     {
         $model   = $this->model;
         $sinceId = Input::get('since', 0);
@@ -129,6 +129,7 @@ abstract class ApiController extends \BaseController {
         $this->configureQuery($query);
 
         return $query->where('id', '>=', $sinceId)
+            ->orderBy('id')
             ->limit(Input::get('limit', $this->limit))
             ->get();
     }

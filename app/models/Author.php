@@ -23,4 +23,14 @@ class Author extends ApiModel {
             'name' => $this->name,
         ];
     }
+
+    /**
+     * Sentences related to this author
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function sentences()
+    {
+        return $this->hasMany('Sentence');
+    }
 } 

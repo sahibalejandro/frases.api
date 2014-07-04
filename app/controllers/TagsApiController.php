@@ -17,4 +17,4 @@ class TagsApiController extends \ApiController {
     {
         parent::__construct($validator);
     }
-} 
+}

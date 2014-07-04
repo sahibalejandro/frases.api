@@ -24,6 +24,11 @@ class Sentence extends ApiModel {
         return $this->belongsToMany('Tag');
     }
 
+    /**
+     * Author related to this sentence
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function author()
     {
         return $this->belongsTo('Author');

@@ -23,4 +23,14 @@ class Tag extends ApiModel {
             'name' => $this->name,
         ];
     }
+
+    /**
+     * Sentences related to this tag
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function sentences()
+    {
+        return $this->belongsToMany('Sentence');
+    }
 } 
